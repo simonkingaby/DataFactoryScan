@@ -1,0 +1,6 @@
+﻿CREATE TABLE DataFactoryScanSample.[TableSource]
+(
+	[Id] INT NOT NULL IDENTITY PRIMARY KEY,
+	Field1 INT NULL,
+	Field2 VARCHAR(50) NULL
+)

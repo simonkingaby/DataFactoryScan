@@ -1,0 +1,31 @@
+{
+    "name": "SourceDataset",
+    "properties": {
+        "linkedServiceName": {
+            "referenceName": "DataFactoryScanDBLinkedService",
+            "type": "LinkedServiceReference"
+        },
+        "type": "AzureSqlTable",
+        "structure": [
+            {
+                "name": "Id",
+                "type": "Int32"
+            },
+            {
+                "name": "Field1",
+                "type": "Int32"
+            },
+            {
+                "name": "Field2",
+                "type": "String"
+            }
+        ],
+        "typeProperties": {
+            "tableName": "DataFactoryScanSample.TableSource"
+        },
+        "annotations": [
+            "DS:DFSDB"
+        ]
+    },
+    "type": "Microsoft.DataFactory/factories/datasets"
+}

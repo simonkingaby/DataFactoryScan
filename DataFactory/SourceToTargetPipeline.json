@@ -1,0 +1,44 @@
+{
+    "name": "SourceToTargetPipeline",
+    "properties": {
+        "activities": [
+            {
+                "name": "CopySourceToTarget",
+                "type": "Copy",
+                "policy": {
+                    "timeout": "7.00:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30
+                },
+                "typeProperties": {
+                    "source": {
+                        "type": "RelationalSource",
+                        "query": "select * from DataFactoryScanSample.TableSource"
+                    },
+                    "sink": {
+                        "type": "SqlSink",
+                        "writeBatchSize": 100000
+                    },
+                    "enableStaging": false,
+                    "cloudDataMovementUnits": 0,
+                    "translator": {
+                        "type": "TabularTranslator",
+                        "columnMappings": "Id: Id, Field1: Field1, Field2: Field2"
+                    }
+                },
+                "inputs": [
+                    {
+                        "referenceName": "SourceDataset",
+                        "type": "DatasetReference"
+                    }
+                ],
+                "outputs": [
+                    {
+                        "referenceName": "TargetDataset",
+                        "type": "DatasetReference"
+                    }
+                ]
+            }
+        ]
+    }
+}
