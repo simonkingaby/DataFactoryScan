@@ -7,6 +7,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using Newtonsoft.Json.Linq;
+using System.Threading.Tasks;
 
 namespace DataFactoryScan
 {
@@ -28,7 +29,7 @@ namespace DataFactoryScan
         /// Scans the data factory pipelines to compare the tables defined in the pipeline activities and the corresponding database tables.
         /// </summary>
         /// <returns><c>true</c> if all tables match, <c>false</c> otherwise.</returns>
-        internal bool ScanDataFactoryPipelines()
+        internal async Task<bool> ScanDataFactoryPipelinesAsync()
         {
             //foreach pipeline in DataFactory
             //foreach activity in pipeline.properties.activities where type = "Copy"
@@ -89,7 +90,8 @@ namespace DataFactoryScan
                                             if (annotation != null)
                                             {
                                                 var connectionName = annotation.Substring(3);
-                                                var connectionString = ConfigurationManager.ConnectionStrings[connectionName].ConnectionString;
+                                                //var connectionString = ConfigurationManager.ConnectionStrings[connectionName].ConnectionString;
+                                                var connectionString = await DFSKeyVaultClient.GetSecretAsync(connectionName).ConfigureAwait(false);
                                                 Console.WriteLine($"Connection:   {connectionString}");
                                                 using (var conn = new SqlConnection(connectionString))
                                                 {
