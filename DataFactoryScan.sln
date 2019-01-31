@@ -7,6 +7,21 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataFactoryScan", "DataFact
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "DataFactoryScanDB", "DataFactoryScanDB\DataFactoryScanDB.sqlproj", "{D7FA2562-D3EB-45CE-91CF-5162499CDEE1}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E39C2254-ECD0-4FE7-AD73-45E228196B3F}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataFactoryPipeline", "DataFactoryPipeline", "{B7CC0C92-E913-43EB-8A8E-17B128E8F285}"
+	ProjectSection(SolutionItems) = preProject
+		DataFactory\AzureKeyVaultLinkedService.json = DataFactory\AzureKeyVaultLinkedService.json
+		DataFactory\DataFactoryScanner.ps1 = DataFactory\DataFactoryScanner.ps1
+		DataFactory\LinkedService.json = DataFactory\LinkedService.json
+		DataFactory\SourceDataset.json = DataFactory\SourceDataset.json
+		DataFactory\SourceToTargetPipeline.json = DataFactory\SourceToTargetPipeline.json
+		DataFactory\TargetDataset.json = DataFactory\TargetDataset.json
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +41,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B7CC0C92-E913-43EB-8A8E-17B128E8F285} = {E39C2254-ECD0-4FE7-AD73-45E228196B3F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {384F2488-6DA3-4D9E-AC74-859DCC3A8B9B}
