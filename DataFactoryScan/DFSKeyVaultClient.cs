@@ -14,7 +14,7 @@ namespace DataFactoryScan
         /// <returns>Task&lt;System.String&gt;.</returns>
         internal static async Task<string> GetSecretAsync(string secretName)
         {
-            var url = $"https://omwtmdatafactorykv.vault.azure.net/secrets/{secretName}";
+            var url = $"https://omwtmdatafactorykv.vault.azure.net/secrets/{secretName}";  
             /* The below 4 lines of code shows you how to use AppAuthentication library to fetch secrets from your Key Vault*/
             var azureServiceTokenProvider = new AzureServiceTokenProvider();
             var keyVaultClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(azureServiceTokenProvider.KeyVaultTokenCallback));

@@ -94,6 +94,7 @@
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\DataFactoryScan20190201020315 - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\DataFactoryScanAS - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\DataFactoryScanWebJob - Web Deploy.pubxml" />
     <None Include="Properties\webjob-publish-settings.json" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
