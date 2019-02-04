@@ -20,8 +20,7 @@ There is one "trick" in this solution that is not obvious from the code.  In ord
 1. [Wiki](Home)
 2. [What's in the Solution?](1.-What's-in-the-Solution%3F)
 3. [Creating the Azure Objects](2.-Creating-the-Azure-Objects)
-4. [Configuring the Secrets](3.-Configuring-the-Secrets)
-5. [Running the WebJob](4.-Running-the-WebJob)
+4. [Running the WebJob](3.-Running-the-WebJob)
 
 
 
