@@ -17,10 +17,10 @@ There is one "trick" in this solution that is not obvious from the code.  In ord
     Secret: "Server=tcp:datafactoryscanserver.database.windows.net,1433;Initial Catalog=DataFactoryScanDB;Persist Security Info=False;User ID=ETLUser;Password=***;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=0;"
 
 ## Contents
-1. [Wiki](Home)
-2. [What's in the Solution?](1.-What's-in-the-Solution%3F)
-3. [Creating the Azure Objects](2.-Creating-the-Azure-Objects)
-4. [Running the WebJob](3.-Running-the-WebJob)
+1. [Wiki](https://github.com/simonkingaby/DataFactoryScan/wiki)
+2. [What's in the Solution?](https://github.com/simonkingaby/DataFactoryScan/wiki/1.-What's-in-the-Solution%3F)
+3. [Creating the Azure Objects](https://github.com/simonkingaby/DataFactoryScan/wiki/2.-Creating-the-Azure-Objects)
+4. [Running the WebJob](https://github.com/simonkingaby/DataFactoryScan/wiki/3.-Running-the-WebJob)
 
 
 
