@@ -1,5 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.Azure.Management.DataFactory;
+using Microsoft.Azure.Management.DataFactory.Models;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Microsoft.Rest;
 using AuthenticationContext = Microsoft.IdentityModel.Clients.ActiveDirectory.AuthenticationContext;
@@ -8,6 +10,16 @@ namespace DataFactoryScan
 {
     class DFSDataFactoryClient
     {
+        private readonly DataFactoryManagementClient dataFactoryManagementClient;
+
+        public string ResourceGroup { get; }
+
+        internal DFSDataFactoryClient()
+        {
+            ResourceGroup = DFSKeyVaultClient.GetSecretAsync("DFSResourceGroup").GetAwaiter().GetResult();
+            dataFactoryManagementClient = GetDataFactoryManagementClientAsync().GetAwaiter().GetResult();
+        }
+
         /// <summary>
         /// Gets the data factory management client.
         /// </summary>
@@ -15,7 +27,7 @@ namespace DataFactoryScan
         /// https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal#create-an-azure-active-directory-application
         /// </remarks>
         /// <returns>DataFactoryManagementClient.</returns>
-        internal static async Task<DataFactoryManagementClient> GetDataFactoryManagementClientAsync()
+        private async Task<DataFactoryManagementClient> GetDataFactoryManagementClientAsync()
         {
             string tenantID = await DFSKeyVaultClient.GetSecretAsync("DFSTenantId").ConfigureAwait(false);
             string applicationId = await DFSKeyVaultClient.GetSecretAsync("DFSApplicationId").ConfigureAwait(false);
@@ -25,9 +37,29 @@ namespace DataFactoryScan
             var context = new AuthenticationContext("https://login.windows.net/" + tenantID);
             ClientCredential cc = new ClientCredential(applicationId, authenticationKey);
             AuthenticationResult result = context.AcquireTokenAsync("https://management.azure.com/", cc).Result;
-            ServiceClientCredentials cred = new TokenCredentials(result.AccessToken);
-            var client = new DataFactoryManagementClient(cred) { SubscriptionId = subscriptionId };
+            ServiceClientCredentials credential = new TokenCredentials(result.AccessToken);
+            var client = new DataFactoryManagementClient(credential) { SubscriptionId = subscriptionId };
             return client;
+        }
+
+        internal IEnumerable<Factory> FetchFactories()
+        {
+            return dataFactoryManagementClient.Factories.ListByResourceGroup(ResourceGroup);
+        }
+
+        internal IEnumerable<PipelineResource> FetchPipelines(Factory factory)
+        {
+            return dataFactoryManagementClient.Pipelines.ListByFactory(ResourceGroup, factory.Name);
+        }
+
+        internal IEnumerable<DatasetResource> FetchDatasets(Factory factory)
+        {
+            return dataFactoryManagementClient.Datasets.ListByFactory(ResourceGroup, factory.Name);
+        }
+
+        internal IEnumerable<LinkedServiceResource> FetchLinkedServices(Factory factory)
+        {
+            return dataFactoryManagementClient.LinkedServices.ListByFactory(ResourceGroup, factory.Name);
         }
     }
 }

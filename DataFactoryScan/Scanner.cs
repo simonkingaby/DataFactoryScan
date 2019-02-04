@@ -13,16 +13,15 @@ namespace DataFactoryScan
 {
     class Scanner
     {
-        private readonly DataFactoryManagementClient dataFactoryManagementClient;
-        private readonly string resourceGroup = "DataFactoryRG";
-
+        private readonly DFSDataFactoryClient dataFactoryClient;
+        
         /// <summary>
         /// Initializes a new instance of the <see cref="Scanner"/> class.
         /// </summary>
-        /// <param name="dataFactoryManagementClient">The data factory management client.</param>
-        internal Scanner(DataFactoryManagementClient dataFactoryManagementClient)
+        /// <param name="dataFactoryClient">The data factory client.</param>
+        internal Scanner()
         {
-            this.dataFactoryManagementClient = dataFactoryManagementClient;
+            this.dataFactoryClient = new DFSDataFactoryClient();
         }
 
         /// <summary>
@@ -42,14 +41,15 @@ namespace DataFactoryScan
 
             var allTablesMatch = true;
 
-            var factories = FetchFactories();
+            var factories = dataFactoryClient.FetchFactories();
             foreach (var factory in factories)
             {
                 Console.WriteLine($"Factory:      {factory.Name}");
 
-                var datasets = FetchDatasets(factory);
-                var linkedServices = FetchLinkedServices(factory);
-                var pipelines = FetchPipelines(factory);
+                var datasets = dataFactoryClient.FetchDatasets(factory);
+                var linkedServices = dataFactoryClient.FetchLinkedServices(factory);
+                var pipelines = dataFactoryClient.FetchPipelines(factory);
+
                 foreach (var pipeline in pipelines)
                 {
                     Console.WriteLine($"Pipeline:     {pipeline.Name}");
@@ -136,26 +136,6 @@ namespace DataFactoryScan
                 }
             }
             return allTablesMatch;
-        }
-
-        private IEnumerable<Factory> FetchFactories()
-        {
-            return dataFactoryManagementClient.Factories.ListByResourceGroup(resourceGroup);
-        }
-
-        private IEnumerable<PipelineResource> FetchPipelines(Factory factory)
-        {
-            return dataFactoryManagementClient.Pipelines.ListByFactory(resourceGroup, factory.Name);
-        }
-
-        private IEnumerable<DatasetResource> FetchDatasets(Factory factory)
-        {
-            return dataFactoryManagementClient.Datasets.ListByFactory(resourceGroup, factory.Name);
-        }
-
-        private IEnumerable<LinkedServiceResource> FetchLinkedServices(Factory factory)
-        {
-            return dataFactoryManagementClient.LinkedServices.ListByFactory(resourceGroup, factory.Name);
         }
     }
 }

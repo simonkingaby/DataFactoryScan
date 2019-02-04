@@ -18,10 +18,8 @@ namespace DataFactoryScan
         }
 
         private static async Task<int> RunAsync()
-        {
-            var client = await DFSDataFactoryClient.GetDataFactoryManagementClientAsync().ConfigureAwait(false);
-
-            var scanner = new Scanner(client);
+        {            
+            var scanner = new Scanner();
             var allTablesMatch = await scanner.ScanDataFactoryPipelinesAsync().ConfigureAwait(false);  //You could parameterize this to take an array of PipelineNames to look through
 
             if (!allTablesMatch)
